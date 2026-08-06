@@ -3,7 +3,7 @@
 
 ## Usage
 ```lua
-local prepass = loadstring(game:HttpGet("https://raw.githubusercontent.com/RiseBlox/UltraSmartSaveInstance/main/prepass.luau", true))()
+local prepass = loadstring(game:HttpGet("https://raw.githubusercontent.com/rinsfx/MySaveInstance/main/prepass.luau", true))()
 
 local Options = {} -- Full list @ https://luau.github.io/UniversalSynSaveInstance/api/SynSaveInstance
 
