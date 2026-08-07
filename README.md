@@ -5,7 +5,10 @@
 ```lua
 local prepass = loadstring(game:HttpGet("https://raw.githubusercontent.com/rinsfx/MySaveInstance/main/prepass.luau", true))()
 
-local Options = {} -- Full list @ https://luau.github.io/UniversalSynSaveInstance/api/SynSaveInstance
+local Options = {
+    SaveBytecode = true,        -- Wajib true agar mentahan bytecode tersimpan di file .rbxl
+    DecompileTimeout = 10,      -- Batas toleransi pembacaan skrip
+}
 
 local PrepassOptions = {
     RequestsPerMinute = 1350,
