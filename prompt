@@ -26,7 +26,7 @@ For **each script found**, report:
 ### STEP 2 — FIX ALL BROKEN MODULES
 
 #### Case A — Known Open-Source / Third-Party Libraries
-If a broken ModuleScript is identified as a known open-source framework or library (examples include but are not limited to: `ProfileService`, `ReplicaService`, `Knit` / `Sleitnick`, `Janitor`, `Maid`, `Promise`, `Cmdr`, `Signal`, `TableUtil`, `Spring`, `Tween`, `Lerp`, etc.):
+If a broken ModuleScript is identified as a known open-source framework or library:
 - Fetch the **latest clean source code** from the library's official GitHub repository
 - **Overwrite** the broken module in Roblox Studio via MCP with the official, unmodified source
 - Log: `[FIXED - OPEN SOURCE] ModuleName → replaced with official source from github.com/...`
@@ -47,14 +47,8 @@ Scan all client-side scripts and identify every `RemoteEvent` and `RemoteFunctio
 RemoteName         | Type          | Direction        | Parameters Sent by Client         | Purpose / Context
 -------------------|---------------|------------------|-----------------------------------|-----------------------------
 CastFishingRod     | RemoteEvent   | Client → Server  | (player, castPosition: Vector3)   | Player casts fishing rod
-ReelFish           | RemoteEvent   | Client → Server  | (player, fishId: string)          | Player reels in a caught fish
-SellFishToMerchant | RemoteEvent   | Client → Server  | (player, fishData: table)         | Sell fish at NPC Merchant
-GachaRoll          | RemoteEvent   | Client → Server  | (player, stoneType: string)       | Enchantment stone gacha roll
-WeatherSync        | RemoteEvent   | Server → Client  | (weatherType: string)             | Sync weather state to clients
-StarfallEvent      | RemoteEvent   | Server → Client  | (zoneId: string, active: bool)    | Starfall Gardens expansion trigger
 ...                | ...           | ...              | ...                               | ...
 ```
-
 Include **all** Remotes discovered, even those used for UI updates, animations, or sound triggers.
 
 ---
@@ -70,43 +64,16 @@ Based on the Remote map and game logic discovered, construct a complete, modular
 
 #### 4B — `DataStoreManager` (ModuleScript)
 - Uses `DataStoreService` with `pcall` error handling and retry logic
-- Manages player data profile: `Coins`, `Gems`, `Level`, `XP`, `Inventory` (fish collection), `EquippedRod`, `EnchantmentSlots`
-- Creates and updates `leaderstats` folder under each player automatically on join
-- Auto-saves data periodically (every 60 seconds) and on `Players.PlayerRemoving`
-- Implements session locking to prevent data loss on server crashes
+- Manages player data profile (Coins, Gems, Level, XP, Inventory, EquippedRod, EnchantmentSlots)
+- Creates and updates `leaderstats` folder
+- Auto-saves data periodically and on `Players.PlayerRemoving`
+- Implements session locking
 
 #### 4C — `GameLogicHandler` (ModuleScript)
-Implement server-side logic for each major game system:
-
-**Fishing System:**
-- Validate cast position is within a registered fishing zone (water body) in `Workspace`
-- Randomly select a fish based on rarity weights and current weather/zone modifiers
-- Return fish data (name, rarity, weight, coin value) to client after successful reel
-
-**Merchant / Sell System:**
-- Validate player character is within `X` studs of the Merchant NPC using `.Magnitude`
-- Validate fish exists in player's server-side inventory before selling
-- Award correct `Coins` amount and remove fish from inventory
-
-**Gacha / Enchantment System:**
-- Validate player has sufficient `Gems` before processing a roll
-- Deduct cost server-side, determine outcome using weighted random, update inventory
-
-**Weather System:**
-- Server-authoritative weather cycle (randomized or time-based)
-- Broadcast weather changes to all clients via RemoteEvent
-
-**Starfall Gardens Expansion:**
-- Manage zone activation state server-side
-- Validate player access/unlock conditions before allowing zone entry
+Implement server-side logic for each major game system (Fishing System, Merchant/Sell System, Gacha/Enchantment System, Weather System, Starfall Gardens Expansion).
 
 #### 4D — `AntiCheat` (ModuleScript)
-Implement the following validation checks:
-- **Distance check**: reject any interaction (fishing, selling, enchanting) if player character is too far from the relevant object
-- **Rate limiting**: reject repeated rapid-fire RemoteEvent calls from a single player (e.g., more than 1 cast per 2 seconds)
-- **Inventory validation**: never award items or currency based solely on client claims
-- **Sanity checks**: reject nonsensical values (negative coins, impossible fish weights, unknown item IDs)
-- Log all suspicious activity with `warn()` and optionally kick repeat offenders
+Implement validation checks: distance check, rate limiting, inventory validation, and sanity checks. Log all suspicious activity with `warn()`.
 
 ---
 
@@ -114,8 +81,8 @@ Implement the following validation checks:
 
 After completing all analysis and writing all code:
 1. Create the folder structure in `ServerScriptService` via MCP
-2. Inject each server script (`NetworkReceiver`, `DataStoreManager`, `GameLogicHandler`, `AntiCheat`) directly into Roblox Studio
-3. Ensure all `RemoteEvent` and `RemoteFunction` objects are created in `ReplicatedStorage` if they do not already exist, with the exact names mapped in Step 3
+2. Inject each server script directly into Roblox Studio
+3. Ensure all `RemoteEvent` and `RemoteFunction` objects are created in `ReplicatedStorage`
 4. Confirm each injection with: `[INJECTED] ServiceName/ScriptName → OK`
 
 ---
@@ -127,20 +94,9 @@ Structure your full response in clearly labeled sections:
 ```
 === STEP 1: SCAN RESULTS ===
 [List all scripts found with status]
-
-=== STEP 2: MODULE FIXES ===
-[Log each fix with type: OPEN SOURCE or CUSTOM RECONSTRUCTED]
-
-=== STEP 3: REMOTE NETWORK MAP ===
-[Full table of all Remotes]
-
-=== STEP 4: SERVER CODE ===
-[Full Luau source code for each server module, clearly separated]
-
-=== STEP 5: INJECTION LOG ===
-[Confirmation of each MCP injection]
+...
 ```
 
 ---
-
-**Begin now with STEP 1. Scan the project directory by directory, report all findings, then proceed through each step without stopping unless you need clarification. Write all code in valid, production-quality Luau. Do not use deprecated Roblox APIs.**
+**IMPORTANT EXECUTION RULE:**
+Do NOT execute all steps at once. Right now, ONLY execute **STEP 1**. Output the scan results, then STOP and wait for my command before moving to STEP 2. Do not generate server logic or fix any modules yet.
