@@ -1,3 +1,5 @@
+getgenv().SIFT_API_KEY = "ok_V7bfvN2ClY0p5DPFpGrVl2KKAIAtVK1U3z8oBIE"
+
 local HttpService = game:GetService("HttpService")
 local API = "https://siftrblx.com/api/v1"
 local SIFT_API_KEY = getgenv().SIFT_API_KEY
