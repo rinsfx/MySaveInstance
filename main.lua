@@ -91,5 +91,8 @@ local Params = {
  SSI = "saveinstance",
 }
 local synsaveinstance = loadstring(game:HttpGet(Params.RepoURL .. Params.SSI .. ".luau", true), Params.SSI)()
-local Options = {} -- Documentation here https://luau.github.io/UniversalSynSaveInstance/api/SynSaveInstance
+local Options = {
+    SaveBytecode = true,        -- Wajib true agar mentahan bytecode tersimpan di file .rbxl
+    DecompileTimeout = 10,      -- Batas toleransi pembacaan skrip
+}
 synsaveinstance(Options)
