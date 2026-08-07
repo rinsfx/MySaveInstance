@@ -136,6 +136,30 @@ Structure your full response in clearly labeled sections:
 ```
 
 ---
-**Begin now with STEP 1. Scan the project directory by directory, report all findings, then proceed through each step without stopping unless you need clarification. Write all code in valid, production-quality Luau. Do not use deprecated Roblox APIs.**
-**IMPORTANT EXECUTION RULE:**
-Do NOT execute all steps at once. Right now, ONLY execute **STEP 1**. Output the scan results, then STOP and wait for my command before moving to STEP 2. Do not generate server logic or fix any modules yet.
+
+**CRITICAL EXECUTION RULES — READ BEFORE DOING ANYTHING:**
+
+1. **Execute ONLY STEP 1 right now.** Do not write any server code, fix any modules, or generate any Remote maps yet. Output the STEP 1 scan results, then **STOP COMPLETELY** and wait for an explicit command to continue.
+
+2. **Use MCP tools actively.** Do not simulate or hallucinate file contents. Use the MCP connection to actually read each script file from the Studio project. If a directory is empty or a script cannot be read, report that explicitly rather than fabricating content.
+
+3. **Be exhaustive.** Do not skip scripts. Scan every descendant recursively within each target location. If a folder contains nested subfolders, scan those too.
+
+4. **For each script found, report all three of the following — no exceptions:**
+   - Full instance path (e.g., `StarterGui.FishingGui.FishingFrame.CastButton.LocalScript`)
+   - Diagnosis: one or more of — `SYNTAX ERROR`, `TRUNCATED`, `MISSING RETURN`, `CLEAN`, or `UNREADABLE`
+   - Classification: `OPEN-SOURCE LIBRARY`, `CUSTOM MODULE`, or `UNKNOWN`
+
+5. **Flag ambiguous cases.** If a script's classification is uncertain (e.g., it resembles a known library but has been heavily modified), flag it as `UNCERTAIN — [reason]` and include a note on what it resembles.
+
+6. **Do not attempt repairs in STEP 1.** Even if you identify a broken module, only log the finding. Fixes happen in STEP 2, which you will not begin until instructed.
+
+7. **Summarize at the end of STEP 1** with a count breakdown:
+   - Total scripts scanned
+   - Number of `LocalScript` / `ModuleScript` / `Script` instances
+   - Number flagged as broken (any non-CLEAN status)
+   - Number identified as open-source libraries
+   - Number identified as custom modules
+   - Number classified as UNKNOWN or UNCERTAIN
+
+**Begin STEP 1 now.**
