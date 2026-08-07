@@ -5,41 +5,22 @@
 ```lua
 local prepass = loadstring(game:HttpGet("https://raw.githubusercontent.com/rinsfx/MySaveInstance/main/prepass.luau", true))()
 
-local Options = {
-    SaveBytecode = true,        -- Wajib true agar mentahan bytecode tersimpan di file .rbxl
-    DecompileTimeout = 10,      -- Batas toleransi pembacaan skrip
+local Options = { 
+SaveBytecode = true, 
+DecompileTimeout = 15, 
+Isolate = true,
+RemovePlayerCharacters = true,
 }
 
-local PrepassOptions = {
-    RequestsPerMinute = 1350,
-    MaxInFlight       = 30,
-    ApiUrl            = "https://api.lua.expert/decompile",
-    Verbose           = true,
-    SkipPrepass       = false, -- skip cache warm-up, go straight to USSI
-    SkipSaveInstance  = false, -- run only the prepass, don't call USSI
-}
-
-prepass(Options, PrepassOptions)
-```
-
-local prepass = loadstring(game:HttpGet("https://raw.githubusercontent.com/rinsfx/MySaveInstance/main/prepass.luau", true))()
-
-local Options = {
-    SaveBytecode = true,
-    DecompileTimeout = 60,
-    Isolate = true,            -- PENTING: Mencegah script game bentrok saat disave
-   -- FileName = "MapHasilSave", -- Menghindari error nama file dari karakter ilegal
-}
-
-local PrepassOptions = {
-    RequestsPerMinute = 1350,
-    MaxInFlight       = 35,
-    RequestTimeout    = 60,
-    ApiUrl            = "https://api.lua.expert/decompile",
-    Verbose           = true,
-    SkipPrepass       = false,
-    SkipSaveInstance  = false,
-}
+local PrepassOptions = { 
+    RequestsPerMinute = 1350, 
+    MaxInFlight = 30, 
+    RequestTimeout = 120, 
+    ApiUrl = "https://api.lua.expert/decompile", 
+    Verbose = true, 
+    SkipPrepass = false, 
+    SkipSaveInstance = false, 
+    }
 
 prepass(Options, PrepassOptions)
 
