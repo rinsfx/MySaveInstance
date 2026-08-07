@@ -22,6 +22,29 @@ local PrepassOptions = {
 prepass(Options, PrepassOptions)
 ```
 
+local prepass = loadstring(game:HttpGet("https://raw.githubusercontent.com/rinsfx/MySaveInstance/main/prepass.luau", true))()
+
+local Options = {
+    SaveBytecode = true,
+    DecompileTimeout = 60,
+    Isolate = true,            -- PENTING: Mencegah script game bentrok saat disave
+   -- FileName = "MapHasilSave", -- Menghindari error nama file dari karakter ilegal
+}
+
+local PrepassOptions = {
+    RequestsPerMinute = 1350,
+    MaxInFlight       = 35,
+    RequestTimeout    = 60,
+    ApiUrl            = "https://api.lua.expert/decompile",
+    Verbose           = true,
+    SkipPrepass       = false,
+    SkipSaveInstance  = false,
+}
+
+prepass(Options, PrepassOptions)
+
+
+
 <details>
 <summary><h3>What's different from the original / Why use this version</h3></summary>
 
